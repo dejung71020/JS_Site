@@ -1,65 +1,193 @@
 <!DOCTYPE html>
 <html lang="ko">
-   
   <head>
-       
     <meta charset="UTF-8" />
-       
-    <title>회원가입 페이지</title>
-     
+    <title>회원가입 - Google 계정</title>
+    <style>
+      /* Google Fonts에서 Roboto 가져오기 */
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f7f7f7; /* 옅은 배경 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* height: 100vh; */ /* 회원가입 폼이 길어질 수 있으므로 제거 */
+        margin: 40px 0; /* 상하 여백 추가 */
+      }
+
+      .signup-container {
+        width: 100%;
+        max-width: 480px; /* 로그인보다 약간 넓게 설정 */
+        background-color: #fff;
+        padding: 30px 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      /* Google 로고 스타일 */
+      .logo-text {
+        font-size: 28px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      .logo-text span:nth-child(1) {
+        color: #4285f4;
+      }
+      .logo-text span:nth-child(2) {
+        color: #ea4335;
+      }
+      .logo-text span:nth-child(3) {
+        color: #fbbc05;
+      }
+      .logo-text span:nth-child(4) {
+        color: #4285f4;
+      }
+      .logo-text span:nth-child(5) {
+        color: #34a853;
+      }
+      .logo-text span:nth-child(6) {
+        color: #ea4335;
+      }
+
+      h1 {
+        color: #202124;
+        font-size: 24px;
+        font-weight: 400;
+        margin-bottom: 8px;
+      }
+
+      p.subtitle {
+        margin-top: 0px;
+        color: #5f6368;
+        font-size: 16px;
+        margin-bottom: 24px;
+      }
+
+      form {
+        text-align: left; /* 폼 요소는 왼쪽 정렬 */
+      }
+
+      /* 입력 필드 스타일 */
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      select {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #dadce0;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        transition: border-color 0.3s;
+        /* label이 없으므로 placeholder에 의존 */
+      }
+
+      /* 생년월일 필드 그룹화 */
+      .birth-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+      .birth-group input,
+      .birth-group select {
+        flex: 1;
+        margin-bottom: 0;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #4285f4;
+        outline: none;
+      }
+
+      /* 버튼 영역 스타일 */
+      .button-area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      button#signupBtn {
+        padding: 10px 24px;
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button#signupBtn:hover {
+        background-color: #357ae8;
+      }
+
+      a.login-link {
+        color: #1a73e8;
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      a.login-link:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
-   
   <body>
-       
-    <h1>회원가입 (Register) 📝</h1>
-       
-    <form id="signupForm">
-            <label for="userid">아이디:</label>      
-      <input type="text" id="userid" placeholder="사용할 아이디" required />    
-        <br /><br />
-            <label for="userpw">비밀번호:</label>      
-      <input type="password" id="userpw" placeholder="비밀번호" required />    
-        <br /><br />
-            <label for="name">이름:</label>      
-      <input type="text" id="name" placeholder="이름" required />      
-      <br /><br />
-            <label for="year">연도</label>      
-      <input type="text" id="year" placeholder="연도 (예: 1990)" required />    
-        <br /><br />
-           
-      <select id="month" required>
-               
-        <option value="">월</option>
-             
-      </select>
-            <label for="day">일</label>      
-      <input type="text" id="day" placeholder="일 (예: 25)" required />      
-      <br /><br />
-            <label for="email">이메일:</label>      
-      <input type="email" id="email" placeholder="이메일 주소" required />      
-      <br /><br />
-            <label for="gender">성별:</label>      
-      <select id="gender" required>
-               
-        <option value="">선택</option>
-               
-        <option value="male">남성</option>
-               
-        <option value="female">여성</option>
-               
-        <option value="other">기타</option>
-             
-      </select>
-            <br /><br />
-            <button type="button" id="signupBtn">회원가입 요청</button>    
-    </form>
+    <div class="signup-container">
+      <div class="logo-text">
+        <span>D</span><span>o</span><span>o</span><span>g</span><span>l</span
+        ><span>e</span>
+      </div>
+      <h1>회원가입</h1>
+      <p class="subtitle">Doogle 계정 만들기</p>
 
-       
-    <hr />
-       
-    <p>이미 계정이 있으신가요? <a href="index.html">로그인 페이지로 이동</a></p>
+      <form id="signupForm">
+        <input
+          type="text"
+          id="userid"
+          placeholder="아이디 (4자 이상)"
+          required
+        />
+        <input
+          type="password"
+          id="userpw"
+          placeholder="비밀번호 (4자 이상)"
+          required
+        />
 
-       
+        <input type="text" id="name" placeholder="이름" required />
+
+        <div class="birth-group">
+          <input type="text" id="year" placeholder="연도 (YYYY)" required />    
+          <select id="month" required>
+            <option value="">월</option>
+          </select>
+          <input type="text" id="day" placeholder="일 (DD)" required />
+        </div>
+
+        <input type="email" id="email" placeholder="이메일 주소" required />
+
+        <select id="gender" required>
+          <option value="">성별 선택</option>
+          <option value="male">남성</option>
+          <option value="female">여성</option>
+          <option value="other">기타</option>
+        </select>
+
+        <div class="button-area">
+          <a href="index.html" class="login-link">로그인 페이지로 이동</a>
+          <button type="button" id="signupBtn">다음</button>
+        </div>
+      </form>
+    </div>
+
     <script>
       // 백엔드 주소 (HOST_PORT: 8080에 맞게 설정)
       const BASE_URL = "http://127.0.0.1:8080";
@@ -68,7 +196,6 @@
       const monthSelect = document.getElementById("month");
       for (let i = 1; i <= 12; i++) {
         const option = document.createElement("option");
-        // 백엔드 유효성 검사 기준(1~12 정수)에 맞춤
         option.value = i;
         option.textContent = i + "월";
         monthSelect.appendChild(option);
@@ -85,6 +212,7 @@
           userid: document.getElementById("userid").value,
           password: document.getElementById("userpw").value,
           name: document.getElementById("name").value,
+          // 백엔드 키와 일치하도록 수정
           birth_year: document.getElementById("year").value,
           birth_month: document.getElementById("month").value,
           birth_day: document.getElementById("day").value,
@@ -92,7 +220,7 @@
           gender: document.getElementById("gender").value,
         };
 
-        // 필드 중 하나라도 비어있는지 기본 검사 (백엔드에서 상세 검사)
+        // 필드 중 하나라도 비어있는지 기본 검사 (브라우저 required 속성으로도 대부분 처리됨)
         if (Object.values(data).some((value) => value === "")) {
           alert("모든 필드를 입력해주세요.");
           return;
@@ -104,7 +232,6 @@
             headers: {
               "Content-Type": "application/json",
             },
-            // 데이터를 JSON 문자열로 변환하여 전송
             body: JSON.stringify(data),
           });
 
@@ -112,11 +239,7 @@
 
           if (response.ok) {
             // 201 Created 성공 시
-            alert("🎉 회원가입 성공! 이제 로그인 페이지로 이동합니다.");
-
-            // JWT 토큰을 localStorage에 저장 (선택 사항, 로그인 API에서 주로 사용됨)
-            // localStorage.setItem('token', result.token);
-
+            alert("🎉 회원가입 성공! 로그인 페이지로 이동합니다.");
             window.location.href = "index.html"; // 로그인 페이지로 리디렉션
           } else if (response.status === 409) {
             // 409 Conflict (아이디 중복)
@@ -138,6 +261,5 @@
         }
       }
     </script>
-     
   </body>
 </html>

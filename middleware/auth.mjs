@@ -27,8 +27,8 @@ export const isAuth = async (req, res, next) => {
       console.log("아이디 없음");
       return res.status(401).json(AUTH_ERROR);
     }
-    console.log("아이디 있음", user.idx);
-    console.log("user.userid: ", user.userid);
+    console.log("user.idx =", user.idx);
+    console.log("user.userid =", user.userid);
     req.idx = user.idx;
     next();
   });

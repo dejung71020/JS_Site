@@ -1,48 +1,153 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>로그인 페이지</title>
+    <title>로그인 - Google 계정</title>
+    <style>
+      /* Google Fonts에서 Roboto 가져오기 */
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f7f7f7; /* 아주 옅은 회색 배경 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .login-container {
+        width: 100%;
+        max-width: 400px; /* 적당한 너비 제한 */
+        background-color: #fff;
+        padding: 48px 40px;
+        border-radius: 8px; /* 부드러운 모서리 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1); /* Google 스타일의 그림자 */
+        text-align: center;
+      }
+
+      h1 {
+        color: #202124;
+        font-size: 24px;
+        font-weight: 400;
+        margin-bottom: 0px;
+      }
+
+      /* Google 로고 느낌 */
+      .logo-text {
+        font-size: 28px;
+        font-weight: 500;
+        margin-bottom: 24px;
+      }
+      .logo-text span:nth-child(1) {
+        color: #4285f4;
+      } /* Blue */
+      .logo-text span:nth-child(2) {
+        color: #ea4335;
+      } /* Red */
+      .logo-text span:nth-child(3) {
+        color: #fbbc05;
+      } /* Yellow */
+      .logo-text span:nth-child(4) {
+        color: #4285f4;
+      } /* Blue */
+      .logo-text span:nth-child(5) {
+        color: #34a853;
+      } /* Green */
+      .logo-text span:nth-child(6) {
+        color: #ea4335;
+      } /* Red */
+
+      form {
+        margin-top: 24px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #dadce0;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        border-color: #4285f4; /* 포커스 시 Google Blue */
+        outline: none;
+      }
+
+      button#loginBtn {
+        width: 100%;
+        padding: 10px 24px;
+        background-color: #4285f4; /* Google Blue */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button#loginBtn:hover {
+        background-color: #357ae8;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid #dadce0;
+        margin: 20px 0;
+      }
+
+      a {
+        color: #1a73e8; /* 링크 색상 */
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
-    <h1>로그인 (index) 🔑</h1>
-    <form>
-      <label for="loginId">아이디:</label>
-      <input type="text" id="loginId" placeholder="아이디 입력" required />
-      <br /><br />
-      <label for="loginPw">비밀번호:</label>
-      <input
-        type="password"
-        id="loginPw"
-        placeholder="비밀번호 입력"
-        required
-      />
-      <br /><br />
-      <button type="button" id="loginBtn">로그인 요청</button>
-    </form>
+    <div class="login-container">
+      <div class="logo-text">
+        <span>D</span><span>o</span><span>o</span><span>g</span><span>l</span
+        ><span>e</span>
+      </div>
+      <h1>로그인</h1>
+      <p style="margin-top: 8px; color: #5f6368; font-size: 16px">
+        Doogle 계정 사용
+      </p>
 
-    <hr />
-    <p>
-      아직 계정이 없으신가요? <a href="./signup.html">회원가입 페이지로 이동</a>
-    </p>
+      <form>
+        <input type="text" id="loginId" placeholder="아이디" required />
+        <input type="password" id="loginPw" placeholder="비밀번호" required />
+        <button type="button" id="loginBtn">로그인</button>
+      </form>
+
+      <hr />
+      <p>아직 계정이 없으신가요? <a href="./signup.html">계정 만들기</a></p>
+    </div>
+
     <script>
-      // 백엔드 주소 (HOST_PORT: 8080에 맞게 설정)
       const BASE_URL = "http://127.0.0.1:8080";
-
-      // 2. 회원가입 버튼 이벤트 리스너 추가
       document
         .getElementById("loginBtn")
         .addEventListener("click", loginHandler);
 
       async function loginHandler() {
-        // 폼 필드에서 데이터 추출
         const data = {
           userid: document.getElementById("loginId").value,
           password: document.getElementById("loginPw").value,
         };
 
-        // 필드 중 하나라도 비어있는지 기본 검사 (백엔드에서 상세 검사)
         if (Object.values(data).some((value) => value === "")) {
           alert("아이디와 비밀번호를 모두 입력해주세요");
           return;
@@ -51,37 +156,24 @@
         try {
           const response = await fetch(`${BASE_URL}/auth/login`, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            // 데이터를 JSON 문자열로 변환하여 전송
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
           });
 
           const result = await response.json();
 
           if (response.ok) {
-            // 201 Created 성공 시
-            alert("🎉 로그인! 로그인 후 페이지로 이동합니다.");
-
-            // JWT 토큰을 localStorage에 저장 (선택 사항, 로그인 API에서 주로 사용됨)
+            alert("🎉 로그인! 메인 페이지로 이동합니다.");
             localStorage.setItem("token", result.token);
-
-            window.location.href = "index.html"; // 일단 다른페이지가 없어서 이동없음
-          } else if (response.status === 400) {
-            // 400 Bad Request (유효성 검사 실패)
-            alert(`입력 오류: ${result.message}`);
+            window.location.href = "main.html"; // main.html로 리디렉션
+          } else if (response.status === 400 || response.status === 401) {
+            alert(`로그인 실패: ${result.message}`);
           } else {
-            // 기타 서버 오류
-            alert(
-              `회원가입 중 오류가 발생했습니다. (${
-                result.message || "알 수 없는 오류"
-              })`
-            );
+            alert(`오류 발생: ${result.message || "알 수 없는 오류"}`);
           }
         } catch (error) {
           console.error("Fetch Error:", error);
-          alert("서버 연결에 실패했습니다. 서버가 실행 중인지 확인하세요.");
+          alert("서버 연결에 실패했습니다.");
         }
       }
     </script>

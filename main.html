@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>메인 허브 - Google 서비스</title>
+    <style>
+      /* Google Fonts 및 기본 스타일 */
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+      :root {
+        --google-blue: #4285f4;
+        --google-dark-text: #202124;
+        --google-light-text: #5f6368;
+        --background-color: #f8f9fa;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      /* 1. 상단 내비게이션 바 (Google App Bar 스타일) */
+      .app-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #fff;
+        border-bottom: 1px solid #dadce0;
+      }
+
+      .logo-text {
+        font-size: 24px;
+        font-weight: 500;
+      }
+      .logo-text span:nth-child(1) {
+        color: #4285f4;
+      }
+      .logo-text span:nth-child(2) {
+        color: #ea4335;
+      }
+      .logo-text span:nth-child(3) {
+        color: #fbbc05;
+      }
+      .logo-text span:nth-child(4) {
+        color: #4285f4;
+      }
+      .logo-text span:nth-child(5) {
+        color: #34a853;
+      }
+      .logo-text span:nth-child(6) {
+        color: #ea4335;
+      }
+
+      /* 사용자 정보 영역 */
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      /* 2. 메인 컨텐츠 영역 */
+      .main-content {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      h2 {
+        color: var(--google-dark-text);
+        font-weight: 500;
+        border-bottom: 2px solid #dadce0;
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+      }
+
+      /* 3. 버튼 스타일 통일 */
+      .primary-btn {
+        padding: 10px 24px;
+        background-color: var(--google-blue);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .primary-btn:hover {
+        background-color: #357ae8;
+      }
+
+      .secondary-btn {
+        padding: 8px 16px;
+        background-color: transparent;
+        color: var(--google-blue);
+        border: 1px solid var(--google-blue);
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      /* 4. 게시글 목록 카드 스타일 */
+      .posts-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      #postsList {
+        display: grid;
+        gap: 20px;
+        /* 2열 레이아웃 */
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      }
+
+      .post-card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s;
+      }
+      .post-card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      .post-card h3 {
+        margin-top: 0;
+        color: var(--google-blue);
+        font-weight: 500;
+      }
+      .post-card p {
+        color: var(--google-dark-text);
+      }
+      .post-meta {
+        font-size: 12px;
+        color: var(--google-light-text);
+        margin-top: 15px;
+        border-top: 1px dashed #eee;
+        padding-top: 10px;
+      }
+
+      /* 인증 상태 표시 */
+      #authStatus {
+        font-weight: 500;
+        padding: 10px;
+        border-radius: 4px;
+        color: white;
+        text-align: center;
+        background-color: #34a853; /* Green for Success */
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-bar">
+        <div class="logo-text">
+            <span>D</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+        </div>
+        <div class="user-info">
+            </div>
+    </div>
+      <div class="user-info">
+        <span id="welcomeUser" style="color: var(--google-dark-text)"
+          >로딩 중...</span
+        >
+        <button class="secondary-btn" id="logoutBtn">로그아웃</button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div id="authStatus">인증 상태 확인 중...</div>
+
+      <div class="posts-header">
+        <h2>게시글 목록</h2>
+        <button class="primary-btn" id="newPostBtn">
+          <span
+            style="font-size: 20px; vertical-align: middle; margin-right: 5px"
+            >+</span
+          >
+          새 글 작성
+        </button>
+      </div>
+
+      <div class="search-bar" style="display: flex; gap: 10px; margin-bottom: 25px;">
+        <input 
+            type="text" 
+            id="searchUseridInput" 
+            placeholder="특정 사용자 ID로 검색" 
+            style="flex-grow: 1; padding: 10px; border: 1px solid #dadce0; border-radius: 4px;"
+        />
+        <button class="secondary-btn" id="searchBtn">검색</button>
+        <button class="secondary-btn" id="resetBtn" style="color: #ea4335; border-color: #ea4335;">초기화</button>
+    </div>
+
+      <div id="postsList">
+        <div class="post-card">
+          <h3>예시 게시글 제목</h3>
+          <p>
+            아직 불러온 게시글이 없습니다. 서버가 실행 중인지 확인하거나, 새
+            글을 작성해 보세요.
+          </p>
+          <div class="post-meta">작성자: loading... | 시간: N/A</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    const BASE_URL = "http://127.0.0.1:8080";
+    const statusElement = document.getElementById("authStatus");
+    const welcomeElement = document.getElementById("welcomeUser");
+    const postsListContainer = document.getElementById('postsList'); // 게시글 목록 컨테이너 ID
+
+    // ------------------------------------------------------------------
+    // 유틸리티: 날짜 형식 변환 함수
+    // ------------------------------------------------------------------
+    function formatDateTime(dateTimeString) {
+        const date = new Date(dateTimeString);
+        return date.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    // ------------------------------------------------------------------
+    // 이벤트 리스너 및 핸들러 (로그아웃, 새 글 작성 버튼 기능 복구)
+    // ------------------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+        // DOM 로드 후 버튼에 리스너 연결
+        const logoutBtn = document.getElementById("logoutBtn");
+        const newPostBtn = document.getElementById("newPostBtn");
+
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", logoutHandler);
+        }
+        if (newPostBtn) {
+            newPostBtn.addEventListener("click", newPostHandler);
+        }
+        
+        document.getElementById("searchBtn").addEventListener("click", handleSearch);
+        document.getElementById("resetBtn").addEventListener("click", handleReset);
+        // 페이지 로드 시 자동 인증 체크 (DOMContentLoaded 이후 실행)
+        checkAuth();
+        
+    });
+
+    function handleSearch() {
+        // 검색 버튼 클릭 시, 입력된 ID를 인수로 전달하여 목록 로드 함수 호출
+        const userid = document.getElementById("searchUseridInput").value.trim();
+        fetchAndRenderPosts(userid); 
+    }
+
+    function handleReset() {
+        // 입력 필드 초기화 후, 전체 목록을 다시 로드
+        document.getElementById("searchUseridInput").value = '';
+        fetchAndRenderPosts(); 
+    }
+
+    function logoutHandler() {
+        localStorage.removeItem("token");
+        alert("로그아웃되었습니다.");
+        window.location.href = "index.html";
+    }
+    
+    function newPostHandler() {
+        // 새 게시글 작성 페이지로 이동
+        window.location.href = "post_create.html";
+    }
+    
+    // ------------------------------------------------------------------
+    // 게시글 목록 불러오기 및 렌더링 함수
+    // ------------------------------------------------------------------
+    async function fetchAndRenderPosts(searchUserid = null) {
+          let url = `${BASE_URL}/post`; // 서버에서 /post로 정의했으므로 /post를 사용합니다.
+        if (searchUserid) {
+            // 검색 ID가 있다면 쿼리 파라미터를 추가합니다.
+            url += `?userid=${encodeURIComponent(searchUserid)}`;
+        }
+        try {
+            // GET /posts 엔드포인트 호출
+            const token = localStorage.getItem("token");
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) {
+                throw new Error(`게시글 로딩 실패: ${response.statusText}`);
+            }
+
+            const posts = await response.json();
+            renderPosts(posts);
+
+        } catch (error) {
+            console.error("게시글 로딩 실패:", error);
+            postsListContainer.innerHTML = `
+                <div class="post-card">
+                    <p class="error-message">게시글을 불러오지 못했습니다. 서버 상태를 확인해주세요. (오류: ${error.message})</p>
+                </div>
+            `;
+        }
+    }
+
+    // 게시글 데이터를 HTML 카드로 변환하여 삽입
+    function renderPosts(posts) {
+        if (!posts || posts.length === 0) {
+            postsListContainer.innerHTML = '<p class="no-posts">아직 작성된 게시글이 없습니다. 첫 글을 작성해 보세요!</p>';
+            return;
+        }
+
+        const listHtml = posts.map(post => {
+            const summary = post.text.length > 150 ? post.text.substring(0, 150) + '...' : post.text;
+            
+            return `
+                <div class="post-card" data-post-idx="${post.idx}">
+                    <h3 class="post-title">${post.title}</h3>
+                    <p>${summary}</p>
+                    <div class="post-meta">
+                        작성자: **${post.name}** (${post.userid}) | 
+                        수정일: ${formatDateTime(post.updatedAt)}
+                    </div>
+                    <a href="post_detail.html?idx=${post.idx}" class="read-more-link" style="color: var(--google-blue); font-weight: 500; display: block; margin-top: 10px;">자세히 보기 &raquo;</a>
+                </div>
+            `;
+        }).join('');
+
+        postsListContainer.innerHTML = listHtml;
+    }
+
+
+    // ------------------------------------------------------------------
+    // JWT 토큰 인증 체크 함수
+    // ------------------------------------------------------------------
+    async function checkAuth() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            statusElement.textContent = "❌ 토큰이 없습니다. 로그인 페이지로 이동합니다.";
+            statusElement.style.backgroundColor = "#ea4335";
+            setTimeout(() => {
+                window.location.href = "index.html"; 
+            }, 1500);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${BASE_URL}/auth/me`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                statusElement.textContent = `✅ 토큰 유효함!`;
+                statusElement.style.backgroundColor = "#34a853";
+                welcomeElement.textContent = `${result.userid}님, 환영합니다!`;
+                
+                // 인증 성공 시 게시글 목록 로드 함수 호출
+                fetchAndRenderPosts(); 
+                
+            } else {
+                statusElement.textContent = `❌ 인증 실패: ${
+                    result.message || "유효하지 않은 토큰입니다."
+                }`;
+                statusElement.style.backgroundColor = "#ea4335";
+                localStorage.removeItem("token");
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 1500);
+            }
+        } catch (error) {
+            statusElement.textContent = "서버 연결 오류.";
+            statusElement.style.backgroundColor = "#fbbc05";
+            welcomeElement.textContent = `연결 오류`;
+            // 서버 연결 오류 시에도 목록 로드 시도는 진행
+            fetchAndRenderPosts(); 
+        }
+    }
+</script>
+  </body>
+</html>
