@@ -27,7 +27,7 @@
       <input type="text" id="year" placeholder="연도 (예: 1990)" required />    
         <br /><br />
            
-      <select id="birthMonth" required>
+      <select id="month" required>
                
         <option value="">월</option>
              
@@ -62,10 +62,10 @@
        
     <script>
       // 백엔드 주소 (HOST_PORT: 8080에 맞게 설정)
-      const BASE_URL = "http://localhost:8080";
+      const BASE_URL = "http://127.0.0.1:8080";
 
       // 1. 월 옵션 동적 생성 (기존 코드 유지)
-      const monthSelect = document.getElementById("birthMonth");
+      const monthSelect = document.getElementById("month");
       for (let i = 1; i <= 12; i++) {
         const option = document.createElement("option");
         // 백엔드 유효성 검사 기준(1~12 정수)에 맞춤
@@ -86,7 +86,7 @@
           password: document.getElementById("userpw").value,
           name: document.getElementById("name").value,
           birth_year: document.getElementById("year").value,
-          birth_month: document.getElementById("birthMonth").value,
+          birth_month: document.getElementById("month").value,
           birth_day: document.getElementById("day").value,
           email: document.getElementById("email").value,
           gender: document.getElementById("gender").value,

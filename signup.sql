@@ -14,3 +14,5 @@ CREATE TABLE user (
     gender ENUM('male', 'female', 'other') NOT NULL
 );
 DROP TABLE user;
+
+SELECT * FROM user;

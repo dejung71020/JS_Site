@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -18,12 +19,71 @@
         required
       />
       <br /><br />
-      <button type="button">로그인 요청</button>
+      <button type="button" id="loginBtn">로그인 요청</button>
     </form>
 
     <hr />
     <p>
       아직 계정이 없으신가요? <a href="./signup.html">회원가입 페이지로 이동</a>
     </p>
+    <script>
+      // 백엔드 주소 (HOST_PORT: 8080에 맞게 설정)
+      const BASE_URL = "http://127.0.0.1:8080";
+
+      // 2. 회원가입 버튼 이벤트 리스너 추가
+      document
+        .getElementById("loginBtn")
+        .addEventListener("click", loginHandler);
+
+      async function loginHandler() {
+        // 폼 필드에서 데이터 추출
+        const data = {
+          userid: document.getElementById("loginId").value,
+          password: document.getElementById("loginPw").value,
+        };
+
+        // 필드 중 하나라도 비어있는지 기본 검사 (백엔드에서 상세 검사)
+        if (Object.values(data).some((value) => value === "")) {
+          alert("아이디와 비밀번호를 모두 입력해주세요");
+          return;
+        }
+
+        try {
+          const response = await fetch(`${BASE_URL}/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // 데이터를 JSON 문자열로 변환하여 전송
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            // 201 Created 성공 시
+            alert("🎉 로그인! 로그인 후 페이지로 이동합니다.");
+
+            // JWT 토큰을 localStorage에 저장 (선택 사항, 로그인 API에서 주로 사용됨)
+            localStorage.setItem("token", result.token);
+
+            window.location.href = "index.html"; // 일단 다른페이지가 없어서 이동없음
+          } else if (response.status === 400) {
+            // 400 Bad Request (유효성 검사 실패)
+            alert(`입력 오류: ${result.message}`);
+          } else {
+            // 기타 서버 오류
+            alert(
+              `회원가입 중 오류가 발생했습니다. (${
+                result.message || "알 수 없는 오류"
+              })`
+            );
+          }
+        } catch (error) {
+          console.error("Fetch Error:", error);
+          alert("서버 연결에 실패했습니다. 서버가 실행 중인지 확인하세요.");
+        }
+      }
+    </script>
   </body>
 </html>

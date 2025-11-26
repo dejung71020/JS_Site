@@ -3,12 +3,12 @@ import express from "express";
 // import postRouter from "./routers/posts.mjs";
 import authRouter from "./routers/auth.mjs";
 import { config } from "./config/config.mjs";
-// import { db } from "./db/database.mjs";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
-
+app.use(cors());
 // app.use("/post", postRouter);
 
 app.use("/auth", authRouter);

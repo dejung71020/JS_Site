@@ -33,7 +33,7 @@ export async function signupAuth(req, res, next) {
     return res.status(409).json({ message: "이미 사용 중인 아이디입니다." });
   }
 
-  const hashed = bcrypt.hashSync(password, config.bycrpt.saltRounds);
+  const hashed = bcrypt.hashSync(password, config.bcrypt.saltRounds);
   const user = await authRepository.signup({
     userid,
     password: hashed,
