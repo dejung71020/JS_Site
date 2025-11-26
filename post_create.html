@@ -5,13 +5,15 @@
     <title>새 글 작성 - Doogle</title>
     <style>
       /* CSS 스타일은 main.html의 스타일을 기반으로 적용합니다. */
-      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500s;700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
       :root {
         --google-blue: #4285f4;
         --google-dark-text: #202124;
         --google-light-text: #5f6368;
         --background-color: #f8f9fa;
+        --input-border-color: #dadce0;
+        --input-focus-shadow: 0 0 0 1px var(--google-blue);
       }
 
       body {
@@ -34,25 +36,41 @@
       .logo-text {
         font-size: 24px;
         font-weight: 500;
+        /* 클릭 시 메인으로 이동하도록 a 태그로 감쌀 경우 아래 스타일 적용 */
+        text-decoration: none;
       }
       .logo-text span:nth-child(1) {
         color: #4285f4;
-      }
+      } /* Blue */
       .logo-text span:nth-child(2) {
         color: #ea4335;
-      }
+      } /* Red */
       .logo-text span:nth-child(3) {
         color: #fbbc05;
-      }
+      } /* Yellow */
       .logo-text span:nth-child(4) {
         color: #4285f4;
-      }
+      } /* Blue */
+      .logo-text span:nth-child(5) {
+        color: #34a853;
+      } /* Green */
+      .logo-text span:nth-child(6) {
+        color: #ea4335;
+      } /* Red */
 
       /* 메인 컨텐츠 영역 */
       .main-content {
-        max-width: 800px; /* 게시글 작성 폼에 적합한 너비 */
+        max-width: 800px;
         margin: 40px auto;
         padding: 0 20px;
+      }
+
+      /* ★★★ 게시글 폼 컨테이너 스타일 추가 ★★★ */
+      .post-form-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 은은한 그림자 */
       }
 
       h1 {
@@ -63,32 +81,60 @@
         margin-bottom: 25px;
       }
 
-      /* 입력 폼 스타일 */
+      /* ★★★ 폼 그룹 및 인풋 스타일 통합 ★★★ */
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--google-dark-text);
+        font-size: 14px;
+      }
+
+      /* 제목 인풋 필드 스타일 */
+      #postTitle {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 20px; /* 기존 인라인 스타일 대체 */
+        border: 1px solid var(--input-border-color);
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 18px; /* 제목임을 강조 */
+        font-weight: 500;
+        font-family: "Roboto", sans-serif;
+        transition: border-color 0.3s;
+      }
+
+      /* 내용 텍스트 영역 스타일 */
       textarea {
         width: 100%;
-        min-height: 300px; /* 내용 입력 영역 확보 */
+        min-height: 300px;
         padding: 15px;
         margin-bottom: 20px;
-        border: 1px solid #dadce0;
+        border: 1px solid var(--input-border-color);
         border-radius: 4px;
         box-sizing: border-box;
         font-size: 16px;
         font-family: "Roboto", sans-serif;
         transition: border-color 0.3s;
-        resize: vertical; /* 수직 크기 조절만 허용 */
+        resize: vertical;
       }
 
+      #postTitle:focus,
       textarea:focus {
         border-color: var(--google-blue);
         outline: none;
-        box-shadow: 0 0 0 1px var(--google-blue);
+        box-shadow: var(--input-focus-shadow);
       }
 
       /* 버튼 영역 */
       .button-area {
         display: flex;
-        justify-content: flex-end; /* 오른쪽 정렬 */
+        justify-content: flex-end;
         gap: 10px;
+        padding-top: 15px; /* 폼과의 간격 확보 */
       }
 
       .primary-btn {
@@ -123,51 +169,49 @@
   </head>
   <body>
     <div class="app-bar">
-      <div class="logo-text">
-        <span>D</span><span>o</span><span>o</span><span>g</span><span>l</span
-        ><span>e</span>
-      </div>
+      <a href="main.html" style="text-decoration: none">
+        <div class="logo-text">
+          <span>D</span><span>o</span><span>o</span><span>g</span><span>l</span
+          ><span>e</span>
+        </div>
+      </a>
       <button class="secondary-btn" onclick="location.href='main.html'">
-        메인으로 돌아가기
+        목록으로 돌아가기
       </button>
     </div>
 
     <div class="main-content">
       <h1>새 게시글 작성</h1>
 
-      <form id="postForm">
-        <input
-          type="text"
-          id="postTitle"
-          placeholder="제목을 입력하세요 (필수)"
-          required
-          style="
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: 500;
-          "
-        />
+      <div class="post-form-container">
+        <form id="postForm">
+          <input
+            type="text"
+            id="postTitle"
+            placeholder="제목을 입력하세요 (필수)"
+            required
+          />
 
-        <textarea
-          id="postText"
-          placeholder="여기에 게시글 내용을 입력하세요."
-          required
-        ></textarea>
+          <textarea
+            id="postText"
+            placeholder="여기에 게시글 내용을 입력하세요."
+            required
+          ></textarea>
 
-        <div class="button-area">
-          <button
-            type="button"
-            class="secondary-btn"
-            onclick="location.href='main.html'"
-          >
-            취소
-          </button>
-          <button type="submit" class="primary-btn" id="submitBtn">
-            작성 완료
-          </button>
-        </div>
-      </form>
+          <div class="button-area">
+            <button
+              type="button"
+              class="secondary-btn"
+              onclick="location.href='main.html'"
+            >
+              취소
+            </button>
+            <button type="submit" class="primary-btn" id="submitBtn">
+              작성 완료
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <script>
@@ -199,7 +243,7 @@
         }
 
         try {
-          // 백엔드 라우트 /posts 사용
+          // 백엔드 라우트 /post 사용
           const response = await fetch(`${BASE_URL}/post`, {
             // POST /post 엔드포인트 사용
             method: "POST",

@@ -37,22 +37,22 @@
       }
       .logo-text span:nth-child(1) {
         color: #4285f4;
-      }
+      } /* Blue */
       .logo-text span:nth-child(2) {
         color: #ea4335;
-      }
+      } /* Red */
       .logo-text span:nth-child(3) {
         color: #fbbc05;
-      }
+      } /* Yellow */
       .logo-text span:nth-child(4) {
         color: #4285f4;
-      }
+      } /* Blue */
       .logo-text span:nth-child(5) {
         color: #34a853;
-      }
+      } /* Green */
       .logo-text span:nth-child(6) {
         color: #ea4335;
-      }
+      } /* Red */
 
       /* 사용자 정보 영역 */
       .user-info {
@@ -311,7 +311,7 @@
     // 게시글 데이터를 HTML 카드로 변환하여 삽입
     function renderPosts(posts) {
         if (!posts || posts.length === 0) {
-            postsListContainer.innerHTML = '<p class="no-posts">아직 작성된 게시글이 없습니다. 첫 글을 작성해 보세요!</p>';
+            postsListContainer.innerHTML = '<p class="no-posts"> 작성된 게시글이 없습니다. </p>';
             return;
         }
 

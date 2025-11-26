@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <title>게시글 상세 보기 - Doogle</title>
     <style>
-      /* main.html에서 사용한 기본 스타일 (폰트, 색상, 버튼 등)을 복사해서 사용하거나,
-         별도 CSS 파일로 분리하는 것이 좋습니다. 여기서는 편의상 주요 스타일만 포함합니다. */
+      /* CSS 스타일은 main.html의 스타일을 기반으로 적용합니다. */
       @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
       :root {
@@ -13,6 +12,7 @@
         --google-dark-text: #202124;
         --google-light-text: #5f6368;
         --background-color: #f8f9fa;
+        --google-red: #ea4335; /* 삭제 버튼 색상 변수화 */
       }
 
       body {
@@ -22,7 +22,7 @@
         padding: 0;
       }
 
-      /* App Bar 및 버튼 스타일은 main.html과 동일하다고 가정합니다. */
+      /* App Bar 및 버튼 스타일 통일 */
       .app-bar {
         display: flex;
         justify-content: space-between;
@@ -31,10 +31,28 @@
         background-color: #fff;
         border-bottom: 1px solid #dadce0;
       }
+
+      /* ★★★ 로고 스타일 복구 및 통일 ★★★ */
+      .logo-text {
+        font-size: 24px;
+        font-weight: 500;
+      }
       .logo-text span:nth-child(1) {
         color: #4285f4;
       }
-      /* ... (나머지 로고 스타일 및 user-info, 버튼 스타일 생략) ... */
+      .logo-text span:nth-child(2) {
+        color: #ea4335;
+      } /* o */
+      .logo-text span:nth-child(3) {
+        color: #fbbc05;
+      } /* o */
+      .logo-text span:nth-child(4) {
+        color: #4285f4;
+      } /* g */
+      .logo-text span:nth-child(5) {
+        color: #34a853;
+      } /* l (e는 없으므로 d,o,o,g,l,e 순으로 색상 배열) */
+
       .main-content {
         max-width: 900px;
         margin: 40px auto;
@@ -55,7 +73,17 @@
         background-color: #357ae8;
       }
       .secondary-btn {
-        /* ... (스타일) ... */
+        padding: 10px 24px;
+        background-color: #fff;
+        color: var(--google-dark-text);
+        border: 1px solid #dadce0;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .secondary-btn:hover {
+        background-color: #f0f0f0;
       }
 
       /* 게시글 상세 스타일 */
@@ -66,26 +94,33 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       }
 
+      /* ★★★ 제목 스타일 수정: 두꺼운 선 대신 얇은 선 사용 ★★★ */
       #postTitle {
         color: var(--google-dark-text);
-        border-bottom: 2px solid var(--google-blue);
-        padding-bottom: 10px;
-        margin-top: 0;
+        font-size: 28px; /* 제목 크기 키움 */
         font-weight: 500;
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+
+      /* 제목과 메타 정보 사이에 얇은 회색 구분선 추가 */
+      .post-header-area {
+        border-bottom: 1px solid #dadce0;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
       }
 
       #postMeta {
         font-size: 14px;
         color: var(--google-light-text);
-        padding-bottom: 15px;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #eee;
+        /* 기존 padding-bottom과 margin-bottom은 post-header-area로 통합 */
       }
 
       #postText {
         line-height: 1.8;
         color: var(--google-dark-text);
-        white-space: pre-wrap; /* 줄 바꿈 및 공백 유지 */
+        white-space: pre-wrap;
+        font-size: 16px;
       }
 
       .action-buttons {
@@ -93,6 +128,11 @@
         border-top: 1px solid #eee;
         padding-top: 20px;
         text-align: right;
+      }
+
+      /* 삭제 버튼 스타일 변수 사용 */
+      #deleteBtn {
+        background-color: var(--google-red) !important;
       }
 
       .action-buttons button {
@@ -120,19 +160,18 @@
       <div id="authStatus" style="display: none"></div>
 
       <div class="post-detail-card">
-        <h1 id="postTitle">게시글 제목 로딩 중...</h1>
-        <p id="postMeta">작성자: ... | 작성 시간: ...</p>
+        <div class="post-header-area">
+          <h1 id="postTitle">게시글 제목 로딩 중...</h1>
+          <p id="postMeta">작성자: ... | 작성 시간: ...</p>
+        </div>
+
         <div id="postText">내용을 불러오는 중입니다.</div>
 
         <div class="action-buttons">
           <button class="secondary-btn" id="editBtn" style="display: none">
             수정
           </button>
-          <button
-            class="primary-btn"
-            id="deleteBtn"
-            style="display: none; background-color: #ea4335"
-          >
+          <button class="primary-btn" id="deleteBtn" style="display: none">
             삭제
           </button>
           <button
@@ -303,7 +342,7 @@
       }
 
       function editPostHandler(idx) {
-        // 수정 페이지로 이동 (post_edit.html 구현 예정)
+        // 수정 페이지로 이동 (post_edit.html)
         window.location.href = `post_edit.html?idx=${idx}`;
       }
 
