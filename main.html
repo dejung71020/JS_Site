@@ -56,6 +56,7 @@
 
       /* 사용자 정보 영역 */
       .user-info {
+        margin-left: 30px;
         display: flex;
         align-items: center;
         gap: 15px;
@@ -362,7 +363,7 @@
             if (response.ok) {
                 statusElement.textContent = `✅ 토큰 유효함!`;
                 statusElement.style.backgroundColor = "#34a853";
-                welcomeElement.textContent = `${result.userid}님, 환영합니다!`;
+                welcomeElement.textContent = `${result.userid}님`;
                 
                 // 인증 성공 시 게시글 목록 로드 함수 호출
                 fetchAndRenderPosts(); 
