@@ -182,7 +182,7 @@
         </select>
 
         <div class="button-area">
-          <a href="index.html" class="login-link">로그인 페이지로 이동</a>
+          <a href="../index.html" class="login-link">로그인 페이지로 이동</a>
           <button type="button" id="signupBtn">다음</button>
         </div>
       </form>
@@ -240,7 +240,7 @@
           if (response.ok) {
             // 201 Created 성공 시
             alert("🎉 회원가입 성공! 로그인 페이지로 이동합니다.");
-            window.location.href = "index.html"; // 로그인 페이지로 리디렉션
+            window.location.href = "../index.html"; // 로그인 페이지로 리디렉션
           } else if (response.status === 409) {
             // 409 Conflict (아이디 중복)
             alert(`회원가입 실패: ${result.message}`);

@@ -266,7 +266,7 @@
     function logoutHandler() {
         localStorage.removeItem("token");
         alert("로그아웃되었습니다.");
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
     }
     
     function newPostHandler() {
@@ -345,7 +345,7 @@
             statusElement.textContent = "❌ 토큰이 없습니다. 로그인 페이지로 이동합니다.";
             statusElement.style.backgroundColor = "#ea4335";
             setTimeout(() => {
-                window.location.href = "index.html"; 
+                window.location.href = "../index.html"; 
             }, 1500);
             return;
         }
@@ -375,7 +375,7 @@
                 statusElement.style.backgroundColor = "#ea4335";
                 localStorage.removeItem("token");
                 setTimeout(() => {
-                    window.location.href = "index.html";
+                    window.location.href = "../index.html";
                 }, 1500);
             }
         } catch (error) {

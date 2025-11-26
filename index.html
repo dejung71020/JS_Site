@@ -133,7 +133,9 @@
       </form>
 
       <hr />
-      <p>아직 계정이 없으신가요? <a href="./signup.html">계정 만들기</a></p>
+      <p>
+        아직 계정이 없으신가요? <a href="./html/signup.html">계정 만들기</a>
+      </p>
     </div>
 
     <script>
@@ -165,7 +167,7 @@
           if (response.ok) {
             alert("🎉 로그인! 메인 페이지로 이동합니다.");
             localStorage.setItem("token", result.token);
-            window.location.href = "main.html"; // main.html로 리디렉션
+            window.location.href = "./html/main.html"; // main.html로 리디렉션
           } else if (response.status === 400 || response.status === 401) {
             alert(`로그인 실패: ${result.message}`);
           } else {
